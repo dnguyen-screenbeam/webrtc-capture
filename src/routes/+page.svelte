@@ -120,7 +120,7 @@
   };
 </script>
 
-<div class="h-full flex flex-col gap-3">
+<div class="flex flex-col gap-3">
   <div class="flex gap-5">
     <button on:click={getStream}>Display camera</button>
     <button on:click={sendStream}>Send stream</button>
@@ -129,28 +129,28 @@
     <button on:click={extractPaper}>Extract Paper</button>
   </div>
 
-  <div class="flex gap-5 h-full flex-1">
-    <div class="flex flex-col gap-3 h-1/2">
+  <div class="flex gap-5 w-1/2 flex-1">
+    <div class="flex flex-col gap-3 flex-1">
       <p class="text-lg font-semibold">Local</p>
       <!-- svelte-ignore a11y-media-has-caption -->
-      <video bind:this={dom.video.local} class="h-full" />
+      <video bind:this={dom.video.local} />
     </div>
 
-    <div class="flex flex-col gap-3 h-1/2">
+    <div class="flex flex-col gap-3 flex-1">
       <p class="text-lg font-semibold">Remote</p>
       <!-- svelte-ignore a11y-media-has-caption -->
-      <video bind:this={dom.video.remote} class="h-full" />
+      <video bind:this={dom.video.remote} />
     </div>
   </div>
 
-  <div class="flex flex-col gap-5 h-full flex-1">
+  <div class="flex-1">
     <p class="text-lg font-semibold">Screenshot</p>
     <!-- svelte-ignore a11y-missing-attribute -->
-    <img bind:this={dom.img} class="border border-gray-500" />
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <canvas bind:this={dom.canvas} class="hidden" width="1920" height="1080" />
+    <img bind:this={dom.img} class="border border-gray-500 w-1/2 h-1/2" />
   </div>
 </div>
+<!-- svelte-ignore a11y-missing-attribute -->
+<canvas bind:this={dom.canvas} class="hidden" width="1920" height="1080" />
 
 <style lang="postcss">
   video {
