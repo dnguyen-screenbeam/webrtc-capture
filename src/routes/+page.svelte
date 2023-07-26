@@ -3,7 +3,8 @@
     video: {
       local: null,
       remote: null
-    }
+    },
+    img: null
   };
 
   let stream = null;
@@ -41,7 +42,7 @@
         dom.video.remote.play();
       }
     };
-    
+
     return peer;
   };
 
@@ -77,16 +78,34 @@
     await peers.remote.setLocalDescription(answer);
     await peers.local.setRemoteDescription(answer);
   };
+
+  const getImageFromVideo = () => {
+    var canvas = document.createElement('canvas');
+    canvas.width = 1920;
+    canvas.height = 1080;
+    var ctx = canvas.getContext('2d');
+    //draw image to canvas. scale to target dimensions
+    ctx.drawImage(dom.video.remote, 0, 0, canvas.width, canvas.height);
+
+    //convert to desired file format
+    var dataURI = canvas.toDataURL('image/jpeg'); // can also use 'image/png'
+    return dataURI;
+  };
+
+  const takeScreenshot = async () => {
+    const img = getImageFromVideo();
+    dom.img.src = img;
+  };
 </script>
 
-<div class="h-full flex flex-col gap-5">
+<div class="h-full flex flex-col gap-3">
   <div class="flex gap-5">
     <button on:click={getStream}>Display screen</button>
-
     <button on:click={sendStream}>Send stream</button>
+    <button on:click={takeScreenshot}>Take Screenshot</button>
   </div>
 
-  <div class="flex gap-5 h-full">
+  <div class="flex gap-5 h-full flex-1">
     <div class="flex flex-col gap-3 h-1/2">
       <p class="text-lg font-semibold">Local</p>
       <!-- svelte-ignore a11y-media-has-caption -->
@@ -98,6 +117,12 @@
       <!-- svelte-ignore a11y-media-has-caption -->
       <video bind:this={dom.video.remote} class="h-full" />
     </div>
+  </div>
+
+  <div class="flex flex-col gap-5 h-full flex-1">
+    <p class="text-lg font-semibold">Screenshot</p>
+    <!-- svelte-ignore a11y-missing-attribute -->
+    <img bind:this={dom.img} class="border border-gray-500" />
   </div>
 </div>
 
